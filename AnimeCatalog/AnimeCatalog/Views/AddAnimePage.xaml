@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModel="clr-namespace:AnimeCatalog.ViewModels;assembly=AnimeCatalog"
+             mc:Ignorable="d"
+             x:Class="AnimeCatalog.Views.AddAnimePage">
+    <ContentPage.BindingContext>
+        <viewModel:AnimeViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Silver">
+            <Frame HasShadow ="true" BackgroundColor="CadetBlue" VerticalOptions="FillAndExpand" Padding="3">
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="4*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Название:" Grid.Column="0" Grid.Row="0" HorizontalOptions="End"/>
+                    <Label Text="Жанр:" Grid.Column="0" Grid.Row="1" HorizontalOptions="End"/>
+                    <Label Text="Описание:" Grid.Column="0" Grid.Row="3" HorizontalOptions="End"/>
+                    <Label Text="Японское:" Grid.Column="0" Grid.Row="4" HorizontalOptions="End"/>
+                    <Label Text="Онгоинг:" Grid.Column="0" Grid.Row="5" HorizontalOptions="End"/>
+                    <Label Text="Дата релиза:" Grid.Column="0" Grid.Row="6" HorizontalOptions="End"/>
+                    <Label Text="Всего серий:" Grid.Column="0" Grid.Row="7" HorizontalOptions="End"/>
+                    <Button Text="Фото" Grid.Column="0" Grid.Row="10" HorizontalOptions="End"
+                            Clicked="OnPickPhotoButtonClicked"/>
+
+                    <Frame HasShadow="True" BackgroundColor="White" Padding="0" HorizontalOptions="FillAndExpand"
+                           Grid.Column="1" Grid.Row="0">
+                        <Entry Text="{Binding Name}"/>
+                    </Frame>
+
+                    <Frame HasShadow="True" BackgroundColor="White" Padding="0" HorizontalOptions="FillAndExpand"
+                           Grid.Column="1" Grid.Row="1">
+                        <Picker x:Name="picker" SelectedItem="{Binding Type}" 
+                            SelectedIndexChanged="Picker_SelectedIndexChanged">
+                            <Picker.Items>
+                                <x:String>Сейнен</x:String>
+                                <x:String>Сёнен</x:String>
+                                <x:String>Сёдзе</x:String>
+                                <x:String>Исэкай</x:String>
+                                <x:String>Драма</x:String>
+                                <x:String>Экшен</x:String>
+                                <x:String>Ужасы</x:String>
+                                <x:String>Комедия</x:String>
+                                <x:String>Детектив</x:String>
+                                <x:String>Спорт</x:String>
+                                <x:String>Триллер</x:String>
+                                <x:String>Фантастика</x:String>
+                                <x:String>Экшен</x:String>
+                                <x:String>Эротика</x:String>
+                                <x:String>Антиутопия</x:String>
+                                <x:String>Безумие</x:String>
+                                <x:String>Военная тематика</x:String>
+                                <x:String>Киберпанк</x:String>
+                                <x:String>Нелинейный сюжет</x:String>
+                                <x:String>Машины</x:String>
+                                <x:String>Лоликон</x:String>
+                                <x:String>Меха</x:String>
+                                <x:String>Этти</x:String>
+                                <x:String>Игры</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Frame>
+                    <ListView ItemsSource="{Binding Types}" ItemSelected="TypesView_ItemSelected" BackgroundColor="LightBlue"
+                              Grid.Column="1" Grid.Row="2"/>
+                    <Frame  HasShadow="True" BackgroundColor="White" Padding="0" HorizontalOptions="FillAndExpand"
+                            Grid.Column="1" Grid.Row="3">
+                        <Editor Text="{Binding Path=Description}"/>
+                    </Frame>
+                    <Switch IsToggled="{Binding Path=IsJapanish}" Grid.Column="1" Grid.Row="4" OnColor="Azure" HorizontalOptions="Start"/>
+                    <Switch IsToggled="{Binding Path=IsOngoing}" Grid.Column="1" Grid.Row="5" OnColor="Azure" HorizontalOptions="Start" />
+                    <DatePicker Date="{Binding Path=ReleaseDate}" Grid.Column="1" Grid.Row="6"/>
+                    <Frame HasShadow="True" BackgroundColor="White"  Padding="0" HorizontalOptions="FillAndExpand"
+                           Grid.Column="1" Grid.Row="7">
+                        <Entry Text="{Binding Path=SeriesCount}" Keyboard="Numeric"/>
+                    </Frame>
+                    <Frame HasShadow="True" BackgroundColor="White"  Padding="0" HorizontalOptions="FillAndExpand"
+                           Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2">
+                        <Entry x:Name="seriesEntry" FontSize="Small" 
+                               Placeholder="добавьте ссылку на серию" Completed="seriesEntry_Completed"/>
+                    </Frame>
+
+                    <ListView ItemsSource="{Binding Series}" ItemSelected="ListView_ItemSelected" BackgroundColor="LightBlue"
+                              Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="9" HorizontalOptions="FillAndExpand"/>
+
+                    <Frame HasShadow="True" BackgroundColor="White"  Padding="0" HorizontalOptions="FillAndExpand"
+                           Grid.Column="1" Grid.Row="10">
+                        <Image x:Name="AnimeImage" />
+                    </Frame>
+                </Grid>
+            </Frame>
+
+            <Frame BackgroundColor="CadetBlue"  Padding="3">
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="Сохранить" Command="{Binding ListViewModel.SaveTitleCommand}"
+                            CommandParameter="{Binding}"
+                            HorizontalOptions="FillAndExpand" BackgroundColor="CadetBlue"/>
+                    <Button Text="Удалить" Command="{Binding ListViewModel.DeleteTitleCommand}"
+                            CommandParameter="{Binding}"
+                            HorizontalOptions="FillAndExpand" BackgroundColor="CadetBlue"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AnimeCatalog.MainPage"
+             Title="Каталог аниме">
+
+    <StackLayout BackgroundColor="DarkGray">
+        <Frame HasShadow="True" BackgroundColor="CadetBlue" VerticalOptions="StartAndExpand"
+               Margin="1" Padding="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Frame HasShadow="True" Grid.Column="0" VerticalOptions="StartAndExpand"
+                       Grid.ColumnSpan="4" Grid.Row="0" Padding="4">
+                    <SearchBar x:Name="Search" Placeholder="поиск"/>
+                </Frame>
+
+                <Label Text="сортировать по:" FontSize="Micro"
+                       Grid.Column="0" TextColor="WhiteSmoke"
+                       Grid.Row="1" HorizontalOptions="Start" 
+                       VerticalOptions="Center"/>
+
+                <Picker x:Name="sortTypePicker" Grid.Column="1" Grid.Row="1" SelectedIndex="0" Margin="3"
+                        SelectedIndexChanged="sortTypePicker_SelectedIndexChanged" FontSize="Micro" 
+                        VerticalOptions="EndAndExpand">
+                    <Picker.Items>
+                        <x:String>просмотрам</x:String>
+                        <x:String>рейтингу</x:String>
+                        <x:String>новизне</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Grid>
+        </Frame>
+        <Frame HasShadow="True" Margin="1" BackgroundColor="CadetBlue" Padding="3">
+            <ListView x:Name="AnimeList"
+                      HasUnevenRows="True"
+                      CachingStrategy="RecycleElement"
+                      ItemSelected="AnimeList_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell ImageSource="{Binding ImageSourseItem, Mode=TwoWay}"
+                                   Height="200" TextColor="Black" DetailColor="Gray"
+                                   Text="{Binding Name}"
+                                   Detail="{Binding Description}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+
+        <Frame HasShadow="True" BackgroundColor="CadetBlue" VerticalOptions="Start"
+               Margin="1" Padding="0">
+            <Button Text="Добавить" Clicked="AddButton_Clicked" TextColor="WhiteSmoke"
+                    BackgroundColor="CadetBlue"/>
+        </Frame>
+    </StackLayout>
+
+</ContentPage>
